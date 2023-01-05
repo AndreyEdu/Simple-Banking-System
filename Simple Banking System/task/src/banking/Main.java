@@ -2,8 +2,13 @@ package banking;
 
 import java.util.Scanner;
 
+import static banking.sql.Connect.*;
+
 public class Main {
     public static void main(String[] args) {
+
+        connect(args[1]);
+        createNewTable();
 
         Scanner scanner = new Scanner(System.in);
         boolean stop1 = true;

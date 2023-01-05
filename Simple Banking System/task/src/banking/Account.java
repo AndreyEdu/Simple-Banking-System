@@ -1,11 +1,15 @@
 package banking;
 
+import banking.sql.Connect;
+
 import java.util.Random;
 
 public class Account {
     private final Card card;
     private final String PIN;
     private final int balance;
+
+    private int id = 0;
 
     Random random = new Random();
 
@@ -17,6 +21,7 @@ public class Account {
         this.PIN = sb.toString();
         this.card = new Card();
         this.balance = 0;
+        Connect.insert(++id, card.getID(), getPIN(), this.balance);
     }
 
     public void create() {

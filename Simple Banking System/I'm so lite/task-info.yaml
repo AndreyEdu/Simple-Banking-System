@@ -488,6 +488,120 @@ files:
         }
     }
   learner_created: false
+- name: src/banking/Card.java
+  visible: true
+  text: |
+    package banking;
+
+    import java.util.Arrays;
+    import java.util.Random;
+
+    public class Card {
+
+        private final int[] bankIdentificationNumber = new int[] {4, 0, 0, 0, 0, 0};
+        private final int[] accountIdentifier = new int[9];
+
+        private int checkSum;
+
+        Random random = new Random();
+
+        public Card() {
+
+            int[] numberCardLuhn = new int[9];
+            int sum = 8;
+
+            for (int i = 0; i < accountIdentifier.length; i++) {
+                accountIdentifier[i] = random.nextInt(10);
+                numberCardLuhn[i] = accountIdentifier[i];
+            }
+
+            for (int i = 0; i < numberCardLuhn.length; i++) {
+                if (i % 2 == 0) {
+                    numberCardLuhn[i] *= 2;
+                    if (numberCardLuhn[i] > 9) {
+                        numberCardLuhn[i] -= 9;
+                    }
+                }
+                sum += numberCardLuhn[i];
+            }
+            System.out.println(sum);
+
+            for (int i = 0; i < 10; i++) {
+                if ((sum + i) % 10 == 0) {
+                    this.checkSum = i;
+                }
+            }
+        }
+
+        public String getID() {
+            StringBuilder sb = new StringBuilder();
+
+            for (int j : bankIdentificationNumber) {
+                sb.append(j);
+            }
+
+            for (int j : accountIdentifier) {
+                sb.append(j);
+            }
+            sb.append(this.checkSum);
+            return sb.toString();
+        }
+    }
+  learner_created: true
+- name: src/banking/Account.java
+  visible: true
+  text: |
+    package banking;
+
+    import java.util.Random;
+
+    public class Account {
+        private final Card card;
+        private final String PIN;
+        private final int balance;
+
+        Random random = new Random();
+
+        public Account() {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < 4; i++) {
+                sb.append(random.nextInt(10));
+            }
+            this.PIN = sb.toString();
+            this.card = new Card();
+            this.balance = 0;
+        }
+
+        public void create() {
+            System.out.println("Your card has been created");
+            System.out.println("Your card number:");
+            System.out.println(card.getID());
+            System.out.println("Your card PIN:");
+            System.out.println(getPIN());
+        }
+
+        public String getPIN() {
+            return PIN;
+        }
+
+        public int getBalance() {
+            return this.balance;
+        }
+
+        public boolean checkData(String cardNumber, String pinNumber) {
+            return cardNumber.equals(card.getID()) && pinNumber.equals(getPIN());
+        }
+    }
+  learner_created: true
+- name: src/banking/sql/Connect.java
+  visible: true
+  learner_created: true
+- name: card.s3db
+  visible: true
+  learner_created: true
 feedback_link: https://hyperskill.org/learn/step/8427#comment
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations!
+  time: "Thu, 05 Jan 2023 10:22:32 UTC"
 record: -1
