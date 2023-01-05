@@ -9,7 +9,7 @@ public class Account {
     private final String PIN;
     private final int balance;
 
-    private int id = 0;
+    private Integer id = 0;
 
     Random random = new Random();
 
